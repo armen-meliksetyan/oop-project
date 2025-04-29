@@ -1,4 +1,6 @@
+package core;
 import java.util.*;
+
 public class OrderItem {
     private MenuItem menuItem;
     private int quantity;

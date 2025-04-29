@@ -1,9 +1,10 @@
+package core;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Order {
     private int id;
-    private List<OrderItem> items = new ArrayList<>();
+    private List<OrderItem> items;
     private int tableNumber;
     private String status;
 
@@ -11,6 +12,14 @@ public class Order {
         this.id = id;
         this.tableNumber = tableNumber;
         this.status = "Pending";
+        this.items = new ArrayList<>();
+    }
+
+    public Order(int id, int tableNumber, String status) {
+        this.id = id;
+        this.tableNumber = tableNumber;
+        this.status = status;
+        this.items = new ArrayList<>();
     }
 
     public void addItem(OrderItem orderItem) {
