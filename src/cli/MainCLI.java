@@ -2,11 +2,9 @@ package cli;
 
 import core.*;
 import exceptions.ItemExistsException;
-import utils.FileUtils;
-import utils.PasswordUtils;
-
 import java.util.ArrayList;
 import java.util.Scanner;
+import utils.PasswordUtils;
 
 public class MainCLI {
 
@@ -14,6 +12,7 @@ public class MainCLI {
     private static MenuManager menuManager = new MenuManager();
     private static OrderManager orderManager = new OrderManager();
     private static User currentUser = null;
+    private static UserManager userManager = new UserManager();
 
     public static void main(String[] args) {
         // Load data
@@ -40,7 +39,8 @@ public class MainCLI {
     private static void loginScreen() {
         System.out.println("=== Restaurant Management System ===");
         System.out.println("1. Login");
-        System.out.println("2. Exit");
+        System.out.println("2. Register");
+        System.out.println("3. Exit");
         System.out.print("Choose option: ");
 
         int choice = Integer.parseInt(scanner.nextLine());
@@ -51,22 +51,69 @@ public class MainCLI {
             System.out.print("Password: ");
             String password = scanner.nextLine();
 
-            // For demo purposes - in real app, you'd have a UserManager
-            if (username.equals("admin") && password.equals("admin123")) {
-                currentUser = new Admin("admin", "admin@restaurant.com",
-                        PasswordUtils.hash("admin123"));
-                System.out.println("Logged in as ADMIN");
-            } else if (username.equals("customer") && password.equals("customer123")) {
-                currentUser = new Customer("customer", "customer@example.com",
-                        PasswordUtils.hash("customer123"));
-                System.out.println("Logged in as CUSTOMER");
+            currentUser = userManager.authenticate(username, password);
+
+            if (currentUser != null) {
+                System.out.println("Logged in as " + currentUser.getRole());
+                if (currentUser.getRole().equals("ADMIN")) {
+                    adminMenu();
+                } else {
+                    customerMenu();
+                }
             } else {
                 System.out.println("Invalid credentials!");
                 loginScreen();
             }
+        } else if (choice == 2) {
+            registerScreen();
         } else {
             System.exit(0);
         }
+    }
+
+    private static void registerScreen() {
+        System.out.println("\n=== REGISTER ===");
+        System.out.println("1. Register as Admin (requires admin code)");
+        System.out.println("2. Register as Customer");
+        System.out.println("3. Back to Login");
+        System.out.print("Choose option: ");
+
+        int choice = Integer.parseInt(scanner.nextLine());
+
+        if (choice == 1) {
+            System.out.print("Enter admin registration code: ");
+            String code = scanner.nextLine();
+            if (!code.equals("ADMIN123")) { // Simple security, replace with better method
+                System.out.println("Invalid admin code!");
+                registerScreen();
+                return;
+            }
+            registerUser(true);
+        } else if (choice == 2) {
+            registerUser(false);
+        } else {
+            loginScreen();
+        }
+    }
+
+    private static void registerUser(boolean isAdmin) {
+        System.out.print("Username: ");
+        String username = scanner.nextLine();
+        System.out.print("Email: ");
+        String email = scanner.nextLine();
+        System.out.print("Password: ");
+        String password = scanner.nextLine();
+
+        User newUser;
+        if (isAdmin) {
+            newUser = new Admin(username, email, PasswordUtils.hash(password));
+        } else {
+            newUser = new Customer(username, email, PasswordUtils.hash(password));
+        }
+
+        userManager.addUser(newUser);
+        System.out.println("Registration successful! Please login.");
+        loginScreen();
     }
 
     private static void adminMenu() {

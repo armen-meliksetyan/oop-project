@@ -34,7 +34,7 @@ public class MenuManager {
         for (MenuItem item : menuItems) {
             lines.add(item.getName() + ","
                     + item.getPrice() + ","
-                    + item.getCategory()
+                    + item.getCategory() + ","
                     + item.getDescription());
         }
         FileUtils.writeLines(lines, "menu.csv");
