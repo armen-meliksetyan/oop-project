@@ -1,17 +1,20 @@
 package core;
-import java.util.*;
 
 public class OrderItem {
+
+    private static int nextId = 0;
+    private final int id;
     private MenuItem menuItem;
     private int quantity;
 
     public OrderItem(MenuItem menuItem, int quantity) {
+        this.id = nextId++;
         this.menuItem = menuItem;
         this.quantity = quantity;
     }
 
     public MenuItem getMenuItem() {
-        return menuItem;
+        return new MenuItem(menuItem);
     }
 
     public void setQuantity(int quantity) {
@@ -22,7 +25,11 @@ public class OrderItem {
         return quantity;
     }
 
-    public double getTotalPrice (){
+    public double getTotalPrice() {
         return menuItem.getPrice() * quantity;
+    }
+
+    public int getId() {
+        return id;
     }
 }

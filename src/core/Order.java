@@ -1,24 +1,28 @@
 package core;
+
 import java.util.ArrayList;
-import java.util.List;
+import java.util.NoSuchElementException;
 
 public class Order {
-    private int id;
-    private List<OrderItem> items;
-    private int tableNumber;
-    private String status;
 
-    public Order(int id, int tableNumber) {
-        this.id = id;
+    private static int nextId = 0;
+
+    private final int id;
+    private ArrayList<OrderItem> items;
+    private int tableNumber;
+    private OrderStatus status;
+
+    public Order(int tableNumber) {
+        this.id = nextId++;
         this.tableNumber = tableNumber;
-        this.status = "Pending";
+        this.status = OrderStatus.PENDING;
         this.items = new ArrayList<>();
     }
 
-    public Order(int id, int tableNumber, String status) {
-        this.id = id;
+    public Order(int tableNumber, String status) {
+        this.id = nextId++;
         this.tableNumber = tableNumber;
-        this.status = status;
+        this.status = OrderStatus.PENDING;
         this.items = new ArrayList<>();
     }
 
@@ -26,9 +30,10 @@ public class Order {
         items.add(orderItem);
     }
 
-    public void removeItem(int orderItemId) {
-        if (orderItemId >= 0 && orderItemId < items.size()) {
-            items.remove(orderItemId);
+    public void removeItem(int orderItemId) throws NoSuchElementException {
+        boolean removed = items.removeIf(item -> item.getId() == orderItemId);
+        if (!removed) {
+            throw new NoSuchElementException("OrderItem with ID " + orderItemId + " not found in order");
         }
     }
 
@@ -40,7 +45,7 @@ public class Order {
         return total;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(OrderStatus status) {
         this.status = status;
     }
 
@@ -52,11 +57,11 @@ public class Order {
         return tableNumber;
     }
 
-    public String getStatus() {
+    public OrderStatus getStatus() {
         return status;
     }
 
-    public List<OrderItem> getItems() {
+    public ArrayList<OrderItem> getItems() {
         return items;
     }
 }

@@ -1,6 +1,9 @@
 package utils;
 
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -8,27 +11,37 @@ import java.util.Scanner;
 public class FileUtils {
 
     public static void writeLines(List<String> lines, String filePath) {
-        try (PrintWriter writer = new PrintWriter(new File(filePath))) {
+        PrintWriter outputStream = null;
+        try {
+            outputStream = new PrintWriter(new FileOutputStream(filePath));
             for (String line : lines) {
-                writer.println(line);
+                outputStream.println(line);
             }
-        } catch (IOException e) {
-            System.out.println("Error writing to file: " + e.getMessage());
+        } catch (FileNotFoundException e) {
+            System.out.println("Error opening the file " + filePath);
+            System.exit(0);
+        } finally {
+            if (outputStream != null) {
+                outputStream.close();
+            }
         }
     }
 
-    public static List<String> readLines(String filePath) {
-        List<String> lines = new ArrayList<>();
-        File file = new File(filePath);
+    public static ArrayList<String> readLines(String filePath) {
+        ArrayList<String> lines = new ArrayList<>();
+        Scanner inputStream = null;
 
-        if (!file.exists()) return lines;
-
-        try (Scanner scanner = new Scanner(file)) {
-            while (scanner.hasNextLine()) {
-                lines.add(scanner.nextLine());
+        try {
+            inputStream = new Scanner(new FileInputStream(filePath));
+            while (inputStream.hasNextLine()) {
+                lines.add(inputStream.nextLine());
             }
-        } catch (IOException e) {
-            System.out.println("Error reading from file: " + e.getMessage());
+        } catch (FileNotFoundException e) {
+            return lines;
+        } finally {
+            if (inputStream != null) {
+                inputStream.close();
+            }
         }
 
         return lines;

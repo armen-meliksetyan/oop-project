@@ -1,52 +1,62 @@
 package core;
-import java.io.*;
-import java.util.*;
+
+import exceptions.ItemExistsException;
+import java.util.ArrayList;
+import utils.FileUtils;
 
 public class MenuManager {
-    private List<MenuItem> menuItems = new ArrayList<>();
 
-    public void addItem(MenuItem item) {
+    private ArrayList<MenuItem> menuItems = new ArrayList<>();
+
+    public void addItem(MenuItem item) throws ItemExistsException {
+        for (MenuItem menuItem : menuItems) {
+            if (menuItem.equals(item)) {
+                throw new ItemExistsException("The item with the name " + item.getName() + " price " + item.getPrice() + " category " + item.getCategory() + " and with description " + item.getDescription() + " already exists.");
+            }
+        }
         menuItems.add(item);
     }
 
     public void removeItem(int id) {
-        for (int i = 0; i < menuItems.size(); i++) {
-            if (menuItems.get(i).getId() == id) {
-                menuItems.remove(i);
-                break;
-            }
-        }
+        menuItems.removeIf(item -> item.getId() == id);
     }
 
-    public List<MenuItem> getMenu() {
-        return menuItems;
+    public ArrayList<MenuItem> getMenu() {
+        ArrayList<MenuItem> copy = new ArrayList<>();
+        for (MenuItem item : menuItems) {
+            copy.add(new MenuItem(item));
+        }
+        return copy;
     }
 
     public void save() {
-        try (PrintWriter writer = new PrintWriter("menu.csv")) {
-            for (MenuItem item : menuItems) {
-                writer.println(item.getId() + "," + item.getName() + "," + item.getPrice() + "," + item.getCategory());
-            }
-        } catch (IOException e) {
-            System.out.println("Error saving menu.");
+        ArrayList<String> lines = new ArrayList<>();
+        for (MenuItem item : menuItems) {
+            lines.add(item.getName() + ","
+                    + item.getPrice() + ","
+                    + item.getCategory()
+                    + item.getDescription());
         }
+        FileUtils.writeLines(lines, "menu.csv");
     }
 
     public void load() {
         menuItems.clear();
-        try (Scanner scanner = new Scanner(new File("menu.csv"))) {
-            while (scanner.hasNextLine()) {
-                String[] parts = scanner.nextLine().split(",");
-                if (parts.length == 4) {
-                    int id = Integer.parseInt(parts[0]);
-                    String name = parts[1];
-                    double price = Double.parseDouble(parts[2]);
-                    String category = parts[3];
-                    menuItems.add(new MenuItem(id, name, price, category));
+        ArrayList<String> lines = FileUtils.readLines("menu.csv");
+
+        for (String line : lines) {
+            String[] parts = line.split(",");
+            if (parts.length == 4) {
+                try {
+                    String name = parts[0];
+                    double price = Double.parseDouble(parts[1]);
+                    String category = parts[2];
+                    String description = parts[3];
+                    menuItems.add(new MenuItem(name, price, category, description));
+                } catch (NumberFormatException e) {
+                    System.out.println("Error parsing menu item: " + line);
                 }
             }
-        } catch (IOException e) {
-            System.out.println("Error loading menu.");
         }
     }
 }
