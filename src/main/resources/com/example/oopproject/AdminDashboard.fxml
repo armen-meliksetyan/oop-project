@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox spacing="20" alignment="CENTER" xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml" fx:controller="com.example.oopproject.ui.AdminDashboardController">
+    <padding>
+        <Insets top="40" right="40" bottom="40" left="40"/>
+    </padding>
+
+    <Label fx:id="welcomeLabel" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+
+    <VBox spacing="15" alignment="CENTER">
+        <Button text="Manage Menu Items" onAction="#handleManageMenuItems" prefWidth="200"/>
+        <Button text="Manage Orders" onAction="#handleManageOrders" prefWidth="200"/>
+        <Button text="View All Orders" onAction="#handleViewAllOrders" prefWidth="200"/>
+        <Button text="Logout" onAction="#handleLogout" prefWidth="200" style="-fx-background-color: #ff4444; -fx-text-fill: white;"/>
+    </VBox>
+</VBox>
