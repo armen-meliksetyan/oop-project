@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+
+<StackPane xmlns="http://javafx.com/javafx/11.0.1"
+           xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.example.oopproject.ui.RegisterController"
+           style="-fx-background-color: linear-gradient(to bottom right, #4a6fa5, #166088);">
+
+    <VBox alignment="CENTER" spacing="20" style="-fx-background-color: rgba(255,255,255,0.9); -fx-background-radius: 10; -fx-padding: 30;">
+        <VBox alignment="CENTER" spacing="10">
+            <Label text="Create Account" style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #333;"/>
+        </VBox>
+
+        <VBox spacing="15" alignment="CENTER" style="-fx-padding: 0 30;">
+            <VBox spacing="8" style="-fx-padding: 0 0 10 0;">
+                <RadioButton text="Register as Customer" fx:id="customerRadio" selected="true"
+                             style="-fx-font-size: 14px; -fx-text-fill: #333;"/>
+                <RadioButton text="Register as Admin (requires code)" fx:id="adminRadio"
+                             style="-fx-font-size: 14px; -fx-text-fill: #333;"/>
+            </VBox>
+
+            <TextField fx:id="usernameField" promptText="Username" style="-fx-pref-width: 250; -fx-pref-height: 40; -fx-font-size: 14px;"/>
+            <TextField fx:id="emailField" promptText="Email" style="-fx-pref-width: 250; -fx-pref-height: 40; -fx-font-size: 14px;"/>
+            <PasswordField fx:id="passwordField" promptText="Password" style="-fx-pref-width: 250; -fx-pref-height: 40; -fx-font-size: 14px;"/>
+            <TextField fx:id="adminCodeField" promptText="Admin Code" style="-fx-pref-width: 250; -fx-pref-height: 40; -fx-font-size: 14px;" visible="false"/>
+
+            <Button text="Register" onAction="#handleRegister" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-pref-width: 250; -fx-pref-height: 40;"/>
+            <Button text="Back to Login" onAction="#handleBackToLogin" style="-fx-background-color: transparent; -fx-text-fill: #2196F3; -fx-font-size: 13px; -fx-underline: true; -fx-padding: 5;"/>
+        </VBox>
+
+        <Label fx:id="messageLabel" style="-fx-text-fill: #e53935; -fx-font-size: 13px; -fx-wrap-text: true; -fx-max-width: 250;"/>
+    </VBox>
+</StackPane>

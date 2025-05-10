@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.effect.*?>
+
+<StackPane xmlns="http://javafx.com/javafx"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.example.oopproject.ui.ViewMyOrdersController"
+           style="-fx-background-color: linear-gradient(to bottom right, #4a6fa5, #166088);">
+
+    <VBox spacing="20" style="-fx-background-color: rgba(255,255,255,0.95); -fx-background-radius: 10; -fx-padding: 30;">
+        <Label fx:id="titleLabel" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;">
+            <font>
+                <Font name="System Bold" size="24"/>
+            </font>
+        </Label>
+
+        <HBox spacing="20" alignment="CENTER">
+            <!-- Orders List -->
+            <VBox spacing="10" style="-fx-padding: 15; -fx-background-color: white; -fx-background-radius: 5; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0, 0, 3);" prefWidth="350">
+                <Label text="All Orders" style="-fx-font-weight: bold; -fx-text-fill: #333; -fx-font-size: 16px;"/>
+                <ListView fx:id="ordersListView" prefHeight="400" style="-fx-font-size: 14px; -fx-background-insets: 0; -fx-padding: 5;"/>
+            </VBox>
+
+            <!-- Order Details -->
+            <VBox spacing="10" style="-fx-padding: 15; -fx-background-color: white; -fx-background-radius: 5; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0, 0, 3);" prefWidth="400">
+                <Label text="Order Details" style="-fx-font-weight: bold; -fx-text-fill: #333; -fx-font-size: 16px;"/>
+                <TextArea fx:id="orderDetailsTextArea" prefHeight="400" editable="false" wrapText="true"
+                          style="-fx-font-size: 14px; -fx-background-color: transparent; -fx-control-inner-background: #f8f9fa;"/>
+            </VBox>
+        </HBox>
+
+        <HBox spacing="15" alignment="CENTER_RIGHT" style="-fx-padding: 10;">
+            <Button text="Back to Dashboard" onAction="#handleBack"
+                    style="-fx-background-color: #607D8B; -fx-text-fill: white; -fx-font-weight: bold; -fx-pref-width: 180; -fx-pref-height: 40;"/>
+        </HBox>
+    </VBox>
+</StackPane>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.effect.*?>
+
+<StackPane xmlns="http://javafx.com/javafx"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.example.oopproject.ui.CustomerDashboardController"
+           style="-fx-background-color: linear-gradient(to bottom right, #4a6fa5, #166088);">
+
+    <VBox alignment="CENTER" spacing="20" style="-fx-background-color: rgba(255,255,255,0.9); -fx-background-radius: 10; -fx-padding: 40;">
+        <VBox alignment="CENTER" spacing="10">
+            <Label text="Customer Dashboard" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #333;">
+                <font>
+                    <Font name="System Bold" size="24"/>
+                </font>
+            </Label>
+            <Label fx:id="welcomeLabel" style="-fx-text-fill: #666; -fx-font-size: 14px;"/>
+        </VBox>
+
+        <VBox spacing="15" alignment="CENTER" style="-fx-padding: 0 30;">
+            <Button text="View Menu" onAction="#handleViewMenu"
+                    style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-weight: bold; -fx-pref-width: 250; -fx-pref-height: 40;"/>
+
+            <Button text="Place Order" onAction="#handlePlaceOrder"
+                    style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-pref-width: 250; -fx-pref-height: 40;"/>
+
+            <Button text="View My Orders" onAction="#handleViewMyOrders"
+                    style="-fx-background-color: #FF9800; -fx-text-fill: white; -fx-font-weight: bold; -fx-pref-width: 250; -fx-pref-height: 40;"/>
+
+            <Button text="Exit" onAction="#handleExit"
+                    style="-fx-background-color: #f44336; -fx-text-fill: white; -fx-font-weight: bold; -fx-pref-width: 250; -fx-pref-height: 40;"/>
+        </VBox>
+    </VBox>
+</StackPane>

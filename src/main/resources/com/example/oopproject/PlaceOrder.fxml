@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.effect.*?>
+
+<StackPane xmlns="http://javafx.com/javafx"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.example.oopproject.ui.PlaceOrderController"
+           style="-fx-background-color: linear-gradient(to bottom right, #4a6fa5, #166088);">
+
+    <VBox spacing="20" style="-fx-background-color: rgba(255,255,255,0.95); -fx-background-radius: 10; -fx-padding: 30;">
+        <Label text="Place Order" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;">
+            <font>
+                <Font name="System Bold" size="24"/>
+            </font>
+        </Label>
+
+        <HBox spacing="20" alignment="CENTER">
+            <!-- Menu Table -->
+            <VBox spacing="10" style="-fx-padding: 15; -fx-background-color: white; -fx-background-radius: 5; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0, 0, 3);">
+                <Label text="Menu Items" style="-fx-font-weight: bold; -fx-text-fill: #333; -fx-font-size: 16px;"/>
+                <TableView fx:id="menuTable" prefHeight="400" prefWidth="500" style="-fx-font-size: 14px;">
+                    <columns>
+                        <TableColumn fx:id="nameColumn" text="Name" prefWidth="200" style="-fx-font-size: 14px;"/>
+                        <TableColumn fx:id="priceColumn" text="Price" prefWidth="100" style="-fx-font-size: 14px;"/>
+                        <TableColumn fx:id="categoryColumn" text="Category" prefWidth="200" style="-fx-font-size: 14px;"/>
+                    </columns>
+                </TableView>
+            </VBox>
+
+            <!-- Order Table -->
+            <VBox spacing="10" style="-fx-padding: 15; -fx-background-color: white; -fx-background-radius: 5; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 5, 0, 0, 3);">
+                <Label text="Your Order" style="-fx-font-weight: bold; -fx-text-fill: #333; -fx-font-size: 16px;"/>
+                <TableView fx:id="orderTable" prefHeight="400" prefWidth="400" style="-fx-font-size: 14px;">
+                    <columns>
+                        <TableColumn fx:id="itemNameColumn" text="Item" prefWidth="200" style="-fx-font-size: 14px;"/>
+                        <TableColumn fx:id="quantityColumn" text="Qty" prefWidth="80" style="-fx-font-size: 14px;"/>
+                        <TableColumn fx:id="priceColumnOrder" text="Price" prefWidth="120" style="-fx-font-size: 14px;"/>
+                    </columns>
+                </TableView>
+                <Label fx:id="totalLabel" text="Total: $0.00" style="-fx-font-weight: bold; -fx-font-size: 16px; -fx-text-fill: #2c3e50;"/>
+            </VBox>
+        </HBox>
+
+        <!-- Input Fields -->
+        <GridPane hgap="15" vgap="15" style="-fx-padding: 15; -fx-background-color: #f8f9fa; -fx-background-radius: 5;">
+            <columnConstraints>
+                <ColumnConstraints prefWidth="120" halignment="RIGHT"/>
+                <ColumnConstraints prefWidth="250"/>
+            </columnConstraints>
+
+            <Label text="Table Number:" style="-fx-text-fill: #333; -fx-font-size: 14px;" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+            <TextField fx:id="tableNumberField" style="-fx-font-size: 14px; -fx-pref-height: 35;" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+            <Label text="Quantity:" style="-fx-text-fill: #333; -fx-font-size: 14px;" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+            <TextField fx:id="quantityField" text="1" style="-fx-font-size: 14px; -fx-pref-height: 35;" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+        </GridPane>
+
+        <!-- Action Buttons -->
+        <HBox spacing="15" alignment="CENTER" style="-fx-padding: 10;">
+            <Button text="Back" onAction="#handleBack" style="-fx-background-color: #607D8B; -fx-text-fill: white; -fx-font-weight: bold; -fx-pref-width: 120; -fx-pref-height: 40;"/>
+            <Button text="Add to Order" onAction="#addToOrder" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-pref-width: 120; -fx-pref-height: 40;"/>
+            <Button text="Remove Item" onAction="#removeFromOrder" style="-fx-background-color: #F44336; -fx-text-fill: white; -fx-font-weight: bold; -fx-pref-width: 120; -fx-pref-height: 40;"/>
+            <Button text="Place Order" onAction="#placeOrder" style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-weight: bold; -fx-pref-width: 120; -fx-pref-height: 40;"/>
+        </HBox>
+    </VBox>
+</StackPane>
