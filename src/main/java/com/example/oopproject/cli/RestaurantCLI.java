@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import com.example.oopproject.utils.PasswordUtils;
 
-public class Main {
+public class RestaurantCLI {
 
     private static Scanner scanner = new Scanner(System.in);
     private static MenuManager menuManager = new MenuManager();
