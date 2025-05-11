@@ -12,7 +12,6 @@ A comprehensive restaurant management application with both CLI and GUI interfac
 ## Table of Contents
 - [Features](#features)
 - [Requirements](#requirements)
-- [Installation](#installation)
 - [Usage](#usage)
 
 
