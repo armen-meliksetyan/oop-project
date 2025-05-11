@@ -37,8 +37,8 @@ public class ManageOrdersController {
 
     @FXML
     public void initialize() {
-        this.orderManager = Main.getOrderManager();
-        this.menuManager = Main.getMenuManager();
+        this.orderManager = RestaurantUI.getOrderManager();
+        this.menuManager = RestaurantUI.getMenuManager();
 
         orderIdColumn.setCellValueFactory(cell -> new SimpleIntegerProperty(cell.getValue().getId()).asObject());
         tableNumberColumn.setCellValueFactory(cell -> new SimpleIntegerProperty(cell.getValue().getTableNumber()).asObject());
