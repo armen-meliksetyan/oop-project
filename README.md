@@ -2,7 +2,6 @@
 
 ![Java](https://img.shields.io/badge/Java-22-blue)
 ![JavaFX](https://img.shields.io/badge/JavaFX-21-orange)
-![License](https://img.shields.io/badge/License-MIT-green)
 
 A comprehensive restaurant management application with both CLI and GUI interfaces, developed by:
 - **Armen Meliksetyan**
