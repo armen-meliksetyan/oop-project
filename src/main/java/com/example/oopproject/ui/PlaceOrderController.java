@@ -171,7 +171,6 @@ public class PlaceOrderController {
     @FXML
     private void handleBack() {
         try {
-            menuManager.save();
             orderManager.save();
 
             Stage stage = (Stage) menuTable.getScene().getWindow();
