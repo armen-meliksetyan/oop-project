@@ -34,4 +34,4 @@ A comprehensive restaurant management application with both CLI and GUI interfac
 
 
 ## Usage
-- **Use -ui as an argument while running the program to open UI and for CLI use argument -cli
+- Use **-ui** as an argument while running the program to open UI and for CLI use argument **-cli**
