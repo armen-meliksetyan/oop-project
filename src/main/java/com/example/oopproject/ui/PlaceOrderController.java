@@ -31,8 +31,8 @@ public class PlaceOrderController {
     @FXML private TextField tableNumberField;
     @FXML private Label totalLabel;
 
-    private final MenuManager menuManager = Main.getMenuManager();
-    private final OrderManager orderManager = Main.getOrderManager();
+    private final MenuManager menuManager = RestaurantUI.getMenuManager();
+    private final OrderManager orderManager = RestaurantUI.getOrderManager();
     private final Map<Integer, Integer> currentOrder = new HashMap<>(); // menuItemId -> quantity
 
     @FXML
