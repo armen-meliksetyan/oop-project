@@ -13,7 +13,6 @@ A comprehensive restaurant management application with both CLI and GUI interfac
 - [Features](#features)
 - [Requirements](#requirements)
 - [Installation](#installation)
-- [Project Structure](#project-structure)
 - [Usage](#usage)
 
 
@@ -34,17 +33,6 @@ A comprehensive restaurant management application with both CLI and GUI interfac
 - **JDK 22** ([Download](https://www.oracle.com/java/technologies/downloads/))
 - **JavaFX 21** ([Download](https://gluonhq.com/products/javafx/)) (for GUI mode)
 - Maven/Gradle (for building)
-
-## Project Structure
-  src/
-├── main/
-│   ├── java/
-│   │   ├── com.example.oopproject/
-│   │   │   ├── cli/          # CLI implementation
-│   │   │   ├── ui/           # JavaFX GUI implementation
-│   │   │   ├── core/         # Business logic
-│   │   │   └── Main.java     # Entry point
-│   └── resources/            # FXML files and assets
 
 
 ## Usage
