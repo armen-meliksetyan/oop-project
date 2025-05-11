@@ -29,7 +29,7 @@ public class ViewMyOrdersController implements Initializable {
         titleLabel.setText("All Orders");
 
         // Get the OrderManager instance from Main
-        OrderManager orderManager = Main.getOrderManager();
+        OrderManager orderManager = RestaurantUI.getOrderManager();
 
         // Configure ListView to display orders properly
         ordersListView.setCellFactory(param -> new ListCell<Order>() {
