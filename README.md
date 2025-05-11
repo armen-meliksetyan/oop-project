@@ -13,10 +13,9 @@ A comprehensive restaurant management application with both CLI and GUI interfac
 - [Features](#features)
 - [Requirements](#requirements)
 - [Installation](#installation)
-- [Usage](#usage)
-- [Build Instructions](#build-instructions)
 - [Project Structure](#project-structure)
-- [License](#license)
+- [Usage](#usage)
+
 
 ## Features
 - **Dual Interface Mode**
@@ -36,6 +35,7 @@ A comprehensive restaurant management application with both CLI and GUI interfac
 - **JavaFX 21** ([Download](https://gluonhq.com/products/javafx/)) (for GUI mode)
 - Maven/Gradle (for building)
 
+## Project Structure
   src/
 ├── main/
 │   ├── java/
