@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.scene.image.Image;
 
-public class Main extends Application {
+public class RestaurantUI extends Application {
 
     private static MenuManager menuManager;
     private static OrderManager orderManager;
