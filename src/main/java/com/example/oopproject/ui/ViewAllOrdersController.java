@@ -24,7 +24,7 @@ public class ViewAllOrdersController implements Initializable {
 
     @FXML private TextArea orderDetailsArea;
 
-    private OrderManager orderManager = Main.getOrderManager(); // Assuming this is how you get the order manager
+    private OrderManager orderManager = RestaurantUI.getOrderManager(); // Assuming this is how you get the order manager
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
