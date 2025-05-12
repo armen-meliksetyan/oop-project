@@ -5,6 +5,11 @@ import com.example.oopproject.exceptions.ItemExistsException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import com.example.oopproject.utils.PasswordUtils;
+/**
+ * CLI-based interface for interacting with the Restaurant Management System.
+ * Provides functionality for both admin and customer roles including:
+ * authentication, registration, order management, and menu operations.
+ */
 
 public class RestaurantCLI {
 
@@ -14,6 +19,10 @@ public class RestaurantCLI {
     private static User currentUser = null;
     private static UserManager userManager = new UserManager();
 
+    /**
+     * Entry point of the application.
+     * Loads data, shows login screen, and dispatches to appropriate menu.
+     */
     public static void main(String[] args) {
         menuManager.load();
         orderManager.load(menuManager);
@@ -35,6 +44,9 @@ public class RestaurantCLI {
         orderManager.save();
     }
 
+    /**
+     * Displays the login screen and handles user authentication and registration routing.
+     */
     private static void loginScreen() {
         System.out.println("=== Restaurant Management System ===");
         System.out.println("1. Login");
@@ -69,7 +81,9 @@ public class RestaurantCLI {
             System.exit(0);
         }
     }
-
+    /**
+     * Displays registration options and handles role-specific registration.
+     */
     private static void registerScreen() {
         System.out.println("\n=== REGISTER ===");
         System.out.println("1. Register as Admin (requires admin code)");
@@ -95,6 +109,10 @@ public class RestaurantCLI {
         }
     }
 
+    /**
+     * Handles the creation and storage of a new user (admin or customer).
+     * @param isAdmin true if registering an admin, false for a customer.
+     */
     private static void registerUser(boolean isAdmin) {
         System.out.print("Username: ");
         String username = scanner.nextLine();
@@ -115,6 +133,9 @@ public class RestaurantCLI {
         loginScreen();
     }
 
+    /**
+     * Displays the admin menu and dispatches to corresponding admin actions.
+     */
     private static void adminMenu() {
         while (true) {
             System.out.println("\n=== ADMIN MENU ===");
@@ -144,6 +165,9 @@ public class RestaurantCLI {
         }
     }
 
+    /**
+     * Displays the customer menu and dispatches to customer actions.
+     */
     private static void customerMenu() {
         while (true) {
             System.out.println("\n=== CUSTOMER MENU ===");
@@ -173,6 +197,9 @@ public class RestaurantCLI {
         }
     }
 
+    /**
+     * Displays and handles menu item management (add, remove, view).
+     */
     private static void manageMenuItems() {
         while (true) {
             System.out.println("\n=== MANAGE MENU ITEMS ===");
@@ -202,6 +229,9 @@ public class RestaurantCLI {
         }
     }
 
+    /**
+     * Prompts the admin to add a new item to the menu.
+     */
     private static void addMenuItem() {
         System.out.println("\n=== ADD MENU ITEM ===");
         System.out.print("Item Name: ");
@@ -221,6 +251,10 @@ public class RestaurantCLI {
         }
     }
 
+
+    /**
+     * Prompts the admin to remove a menu item by ID.
+     */
     private static void removeMenuItem() {
         System.out.println("\n=== REMOVE MENU ITEM ===");
         viewMenu();
@@ -231,6 +265,9 @@ public class RestaurantCLI {
         System.out.println("Menu item removed successfully!");
     }
 
+    /**
+     * Prints all current menu items to the console.
+     */
     private static void viewMenu() {
         System.out.println("\n=== MENU ===");
         ArrayList<MenuItem> menu = menuManager.getMenu();
@@ -245,6 +282,9 @@ public class RestaurantCLI {
         }
     }
 
+    /**
+     * Displays options to view or update orders for admin.
+     */
     private static void manageOrders() {
         while (true) {
             System.out.println("\n=== MANAGE ORDERS ===");
@@ -270,6 +310,10 @@ public class RestaurantCLI {
         }
     }
 
+
+    /**
+     * Prints all orders, regardless of status or owner.
+     */
     private static void viewAllOrders() {
         System.out.println("\n=== ALL ORDERS ===");
         for (Order order : orderManager.getOrders()) {
@@ -277,6 +321,10 @@ public class RestaurantCLI {
         }
     }
 
+    /**
+     * Prints orders filtered by a specific status (e.g. PENDING, COMPLETED).
+     * @param status The order status to filter by.
+     */
     private static void viewOrdersByStatus(OrderStatus status) {
         System.out.println("\n=== " + status.toString().toUpperCase() + " ORDERS ===");
         boolean found = false;
@@ -293,6 +341,10 @@ public class RestaurantCLI {
         }
     }
 
+    /**
+     * Prints detailed information for a specific order.
+     * @param order The order to display.
+     */
     private static void printOrderDetails(Order order) {
         System.out.printf("\n[Order ID: %d] Table: %d | Status: %s\n",
                 order.getId(), order.getTableNumber(), order.getStatus());
@@ -307,6 +359,9 @@ public class RestaurantCLI {
         System.out.printf("Total: $%.2f\n", order.getTotalPrice());
     }
 
+    /**
+     * Allows admin to update the status of an existing order.
+     */
     private static void updateOrderStatus() {
         viewAllOrders();
         System.out.print("\nEnter Order ID to update: ");
@@ -343,6 +398,9 @@ public class RestaurantCLI {
         System.out.println("Order status updated to " + newStatus);
     }
 
+    /**
+     * Allows customers to place a new order by selecting menu items.
+     */
     private static void placeOrder() {
         System.out.println("\n=== PLACE NEW ORDER ===");
         viewMenu();
@@ -391,6 +449,10 @@ public class RestaurantCLI {
         }
     }
 
+    /**
+     * Displays all orders placed by the customer.
+     * (Currently shows all orders; should be filtered by user in production).
+     */
     private static void viewCustomerOrders() {
         System.out.println("\n=== YOUR ORDERS ===");
         boolean found = false;

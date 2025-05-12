@@ -4,23 +4,48 @@ import com.example.oopproject.exceptions.ItemExistsException;
 import java.util.ArrayList;
 import com.example.oopproject.utils.FileUtils;
 
+/**
+ * Manages a list of MenuItem objects representing the restaurant's menu.
+ * Supports adding, removing, retrieving, saving, and loading menu items.
+ */
 public class MenuManager {
 
     private ArrayList<MenuItem> menuItems = new ArrayList<>();
 
+    /**
+     * Adds a new item to the menu.
+     * Throws an exception if an identical item already exists in the menu.
+     *
+     * @param item the MenuItem to add
+     * @throws ItemExistsException if an item with the same properties already exists
+     */
     public void addItem(MenuItem item) throws ItemExistsException {
         for (MenuItem menuItem : menuItems) {
             if (menuItem.equals(item)) {
-                throw new ItemExistsException("The item with the name " + item.getName() + " price " + item.getPrice() + " category " + item.getCategory() + " and with description " + item.getDescription() + " already exists.");
+                throw new ItemExistsException("The item with the name " + item.getName() +
+                        ", price " + item.getPrice() +
+                        ", category " + item.getCategory() +
+                        ", and description \"" + item.getDescription() + "\" already exists.");
             }
         }
         menuItems.add(item);
     }
 
+    /**
+     * Removes an item from the menu based on its unique ID.
+     *
+     * @param id the ID of the item to remove
+     */
     public void removeItem(int id) {
         menuItems.removeIf(item -> item.getId() == id);
     }
 
+    /**
+     * Returns a deep copy of the current menu.
+     * Modifying the returned list will not affect the original menu.
+     *
+     * @return a copy of the list of menu items
+     */
     public ArrayList<MenuItem> getMenu() {
         ArrayList<MenuItem> copy = new ArrayList<>();
         for (MenuItem item : menuItems) {
@@ -29,17 +54,26 @@ public class MenuManager {
         return copy;
     }
 
+    /**
+     * Saves the current menu to a file named "menu.csv".
+     * Each menu item is saved as a comma-separated line.
+     */
     public void save() {
         ArrayList<String> lines = new ArrayList<>();
         for (MenuItem item : menuItems) {
-            lines.add(item.getName() + ","
-                    + item.getPrice() + ","
-                    + item.getCategory() + ","
-                    + item.getDescription());
+            lines.add(item.getName() + "," +
+                    item.getPrice() + "," +
+                    item.getCategory() + "," +
+                    item.getDescription());
         }
         FileUtils.writeLines(lines, "menu.csv");
     }
 
+    /**
+     * Loads the menu from the "menu.csv" file.
+     * Clears the existing menu items before loading.
+     * Ignores lines with incorrect format or invalid number formats.
+     */
     public void load() {
         menuItems.clear();
         ArrayList<String> lines = FileUtils.readLines("menu.csv");

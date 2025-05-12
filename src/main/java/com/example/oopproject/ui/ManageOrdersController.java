@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
 import java.util.List;
+import java.util.Objects;
 
 public class ManageOrdersController {
 
@@ -40,11 +41,14 @@ public class ManageOrdersController {
         this.orderManager = RestaurantUI.getOrderManager();
         this.menuManager = RestaurantUI.getMenuManager();
 
+        // Initialize order table columns
         orderIdColumn.setCellValueFactory(cell -> new SimpleIntegerProperty(cell.getValue().getId()).asObject());
         tableNumberColumn.setCellValueFactory(cell -> new SimpleIntegerProperty(cell.getValue().getTableNumber()).asObject());
-        statusColumn.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getStatus().toString()));
+        statusColumn.setCellValueFactory(cell -> new SimpleStringProperty(
+                Objects.toString(cell.getValue().getStatus(), "UNKNOWN")));
         totalColumn.setCellValueFactory(cell -> new SimpleDoubleProperty(cell.getValue().getTotalPrice()).asObject());
 
+        // Initialize items table columns
         itemNameColumn.setCellValueFactory(cell -> {
             MenuItem menuItem = cell.getValue().getMenuItem();
             return new SimpleStringProperty(menuItem != null ? menuItem.getName() : "N/A");
@@ -52,15 +56,21 @@ public class ManageOrdersController {
         quantityColumn.setCellValueFactory(cell -> new SimpleIntegerProperty(cell.getValue().getQuantity()).asObject());
         itemTotalColumn.setCellValueFactory(cell -> new SimpleDoubleProperty(cell.getValue().getTotalPrice()).asObject());
 
+        // Initialize status combobox
         statusComboBox.setItems(FXCollections.observableArrayList(OrderStatus.values()));
-        statusComboBox.setConverter(new StringConverter<>() {
+        statusComboBox.setConverter(new StringConverter<OrderStatus>() {
             @Override
             public String toString(OrderStatus status) {
-                return status.toString();
+                return status == null ? "Select Status" : status.toString();
             }
+
             @Override
             public OrderStatus fromString(String string) {
-                return OrderStatus.valueOf(string);
+                try {
+                    return string == null || string.isEmpty() ? null : OrderStatus.valueOf(string);
+                } catch (IllegalArgumentException e) {
+                    return null;
+                }
             }
         });
 
@@ -70,6 +80,7 @@ public class ManageOrdersController {
                 updateOrderDetails(newOrder);
             } else {
                 itemsTable.getItems().clear();
+                statusComboBox.setValue(null);
             }
         });
 
@@ -77,9 +88,15 @@ public class ManageOrdersController {
     }
 
     private void updateOrderDetails(Order order) {
+        if (order == null) {
+            itemsTable.getItems().clear();
+            statusComboBox.setValue(null);
+            return;
+        }
+
         ObservableList<OrderItem> items = FXCollections.observableArrayList(order.getItems());
         itemsTable.setItems(items);
-        statusComboBox.setValue(order.getStatus());
+        statusComboBox.setValue(order.getStatus() != null ? order.getStatus() : OrderStatus.PENDING);
     }
 
     private void loadOrders() {
@@ -90,6 +107,9 @@ public class ManageOrdersController {
 
             if (!orders.isEmpty()) {
                 ordersTable.getSelectionModel().selectFirst();
+            } else {
+                itemsTable.getItems().clear();
+                statusComboBox.setValue(null);
             }
         }
     }
@@ -129,12 +149,13 @@ public class ManageOrdersController {
         }
 
         selectedOrder.setStatus(newStatus);
-
         ordersTable.refresh();
 
         try {
-            orderManager.save();
-            showAlert("Success", "Order status updated to " + newStatus);
+            if (orderManager != null) {
+                orderManager.save();
+                showAlert("Success", "Order status updated to " + newStatus);
+            }
         } catch (Exception e) {
             showAlert("Error", "Failed to save changes: " + e.getMessage());
         }
@@ -155,8 +176,10 @@ public class ManageOrdersController {
             Parent root = loader.load();
 
             AdminDashboardController controller = loader.getController();
-            controller.setOrderManager(orderManager);
-            controller.setMenuManager(menuManager);
+            if (controller != null) {
+                controller.setOrderManager(orderManager);
+                controller.setMenuManager(menuManager);
+            }
 
             Stage stage = (Stage) ordersTable.getScene().getWindow();
             stage.setScene(new Scene(root, 800, 600));
